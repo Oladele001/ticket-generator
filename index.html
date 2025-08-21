@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ticket Generator</title>
+    <link rel="icon" href="./assets/images/favicon-32x32.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-black">
+    <!-- ================== FORM SECTION ================== -->
+    <section
+      id="form"
+      class="relative min-h-screen flex flex-col justify-center items-center p-4 w-full overflow-hidden">
+      <!-- Background -->
+      <img
+        src="./assets/images/background-mobile.png"
+        alt="background"
+        class="absolute inset-0 w-full h-full object-cover -z-10" />
+
+      <!-- Top squiggly -->
+      <img
+        src="./assets/images/pattern-squiggly-line-top.svg"
+        alt=""
+        class="absolute top-0 right-0 w-20 md:w-32" />
+
+      <!-- Bottom squiggly -->
+      <img
+        src="./assets/images/pattern-squiggly-line-bottom-mobile-tablet.svg"
+        alt=""
+        class="absolute bottom-0 left-0 w-48 md:w-72" />
+
+      <!-- Card -->
+      <div class="w-full max-w-2xl bg-black/60 p-6 rounded-xl relative">
+        <!-- Logo -->
+        <div class="flex justify-center mb-4">
+          <img src="./assets/images/logo-full.svg" alt="Logo" />
+        </div>
+
+        <!-- Heading -->
+        <h1 class="text-white text-center text-2xl md:text-4xl font-bold mb-2">
+          Your Journey to Coding Conf 2025 Starts Here!
+        </h1>
+        <p class="text-gray-300 text-center mb-6">
+          Secure your spot at next year's biggest coding conference.
+        </p>
+
+        <!-- Upload Avatar -->
+        <label class="text-white block text-center mt-4">Upload Avatar</label>
+        <div
+          class="w-full max-w-sm h-28 border-2 border-dashed border-gray-400 rounded-md mx-auto mt-3 flex items-center justify-center relative">
+          <input
+            type="file"
+            id="fileinput"
+            onchange="previewImage(event)"
+            class="hidden"
+            accept="image/*" />
+
+          <div
+            id="uploadIcon"
+            onclick="openFilepicker()"
+            class="grid cursor-pointer">
+            <img
+              class="w-12 m-auto h-12"
+              src="./assets/images/icon-upload.svg"
+              alt="upload" />
+            <p class="text-gray-300">Drag and drop or click to upload</p>
+          </div>
+
+          <img
+            id="uploadPreview"
+            class="hidden w-20 h-20 rounded-full object-cover cursor-pointer"
+            onclick="openFilepicker()" />
+        </div>
+
+        <div class="flex text-center justify-center">
+          <img class="text-[1rem]" src="./assets/images/icon-info.svg" alt="" />
+          <p class="text-gray-400 text-sm text-center mt-2">
+            Upload your photo (JPG or PNG, max size: 500KB).
+          </p>
+        </div>
+
+        <form class="flex flex-col gap-4 mt-6 items-center">
+          <div class="w-full max-w-sm">
+            <label class="text-white">Full Name</label>
+            <input
+              id="firstname"
+              type="text"
+              class="w-full bg-transparent text-white mt-1 p-2 rounded-md border border-gray-400" />
+          </div>
+
+          <div class="w-full max-w-sm">
+            <label class="text-white">Email Address</label>
+            <input
+              id="email"
+              type="email"
+              placeholder="example@email.com"
+              class="w-full bg-transparent text-white mt-1 p-2 rounded-md border border-gray-400" />
+          </div>
+
+          <div class="w-full max-w-sm">
+            <label class="text-white">GitHub Username</label>
+            <input
+              id="githubname"
+              type="text"
+              placeholder="@yourusername"
+              class="w-full bg-transparent text-white mt-1 p-2 rounded-md border border-gray-400" />
+          </div>
+
+          <button
+            id="Generate"
+            type="button"
+            class="w-full max-w-sm h-10 rounded-md bg-red-600 text-white mt-4">
+            Generate My Ticket
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <section
+      id="ticket"
+      class="relative hidden min-h-screen flex-col justify-center items-center p-4 w-full overflow-hidden">
+      <img
+        src="./assets/images/background-mobile.png"
+        alt="background"
+        class="absolute inset-0 w-full h-full object-cover -z-10" />
+
+      <img
+        src="./assets/images/pattern-squiggly-line-top.svg"
+        alt=""
+        class="absolute top-0 right-0 w-20 md:w-32" />
+
+      <img
+        src="./assets/images/pattern-squiggly-line-bottom-mobile-tablet.svg"
+        alt=""
+        class="absolute bottom-0 left-0 w-48 md:w-72" />
+
+      <div class="w-full items-center max-w-2xl bg-black/60 p-6 rounded-xl relative">
+        <div class="flex justify-center mb-4">
+          <img src="./assets/images/logo-full.svg" alt="Logo" />
+        </div>
+
+        <h1 class="text-white text-center text-2xl mb-2">
+          Congrats, <span id="ticketName">Guest</span> ! Your ticket is ready.
+        </h1>
+        <p class="text-gray-300 text-center mb-6">
+          We've emailed your ticket to
+          <span id="ticketEmail" class="text-white"></span> and will send
+          updates in the run up to the event.
+        </p>
+
+        <div class="bg-gray-800 rounded-xl p-6 relative">
+          <div class="flex items-center gap-4">
+            <div
+              class="w-16 h-16 border-2 border-gray-400 rounded-md overflow-hidden">
+              <img id="ticketAvatar" class="w-full h-full object-cover" />
+            </div>
+
+            <div>
+              <input
+                id="showmyname"
+                class="bg-transparent text-white text-xl"
+                readonly />
+              <div class="flex items-center gap-2 mt-1">
+                <img src="./assets/images/icon-github.svg" class="w-5 h-5" />
+                <input
+                  id="showgithubname"
+                  class="bg-transparent text-white text-sm"
+                  readonly />
+              </div>
+            </div>
+          </div>
+          <p class="text-gray-400 text-sm mt-4">Jan 31, 2025 / Austin, TX</p>
+        </div>
+        <button
+          id="previous"
+          type="button"
+          class="text-white text-xl justify-center text-center w-44 m-auto h-16 rounded-md bg-red-600">
+           ← previous page
+        </button>
+      </div>
+    </section>
+
+    <script>
+      const firstname = document.getElementById("firstname");
+      const email = document.getElementById("email");
+      const githubname = document.getElementById("githubname");
+      const showmyname = document.getElementById("showmyname");
+      const showgithubname = document.getElementById("showgithubname");
+      const ticketName = document.getElementById("ticketName");
+      const ticketEmail = document.getElementById("ticketEmail");
+      const ticketAvatar = document.getElementById("ticketAvatar");
+      const previous = document.getElementById("previous");
+
+      const ticket = document.getElementById("ticket");
+      const form = document.getElementById("form");
+      const generate = document.getElementById("Generate");
+
+      generate.addEventListener("click", (event) => {
+        event.preventDefault();
+        if (
+          firstname.value === "" ||
+          email.value === "" ||
+          githubname.value === ""
+        ) {
+          alert("fill the empty space 🥷");
+        } else {
+          showmyname.value = firstname.value;
+          showgithubname.value = githubname.value;
+          ticketName.textContent = firstname.value || "Guest";
+          ticketEmail.textContent = email.value || "your email";
+
+          form.style.display = "none";
+          ticket.style.display = "flex";
+        }
+      });
+
+      function previewImage(event) {
+        const file = event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            const img = document.getElementById("uploadPreview");
+            img.src = e.target.result;
+            img.classList.remove("hidden");
+            document.getElementById("uploadIcon").classList.add("hidden");
+
+            ticketAvatar.src = e.target.result;
+          };
+          reader.readAsDataURL(file);
+        }
+      }
+
+      function openFilepicker() {
+        document.getElementById("fileinput").click();
+      }
+      previous.addEventListener("click", (event) => {
+        event.preventDefault()
+        form.style.display = "flex";
+        ticket.style.display = "none";
+      });
+    </script>
+  </body>
+</html>
