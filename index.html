@@ -6,38 +6,41 @@
     <title>Ticket Generator</title>
     <link rel="icon" href="./assets/images/favicon-32x32.png" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+      (function () {
+        emailjs.init({
+          publicKey: "lB5jUTjuM9jfPK6jH",
+        });
+      })();
+    </script>
   </head>
   <body class="bg-black">
-    <!-- ================== FORM SECTION ================== -->
     <section
       id="form"
       class="relative min-h-screen flex flex-col justify-center items-center p-4 w-full overflow-hidden">
-      <!-- Background -->
       <img
         src="./assets/images/background-mobile.png"
         alt="background"
         class="absolute inset-0 w-full h-full object-cover -z-10" />
 
-      <!-- Top squiggly -->
       <img
         src="./assets/images/pattern-squiggly-line-top.svg"
         alt=""
         class="absolute top-0 right-0 w-20 md:w-32" />
 
-      <!-- Bottom squiggly -->
       <img
         src="./assets/images/pattern-squiggly-line-bottom-mobile-tablet.svg"
         alt=""
         class="absolute bottom-0 left-0 w-48 md:w-72" />
 
-      <!-- Card -->
       <div class="w-full max-w-2xl bg-black/60 p-6 rounded-xl relative">
-        <!-- Logo -->
         <div class="flex justify-center mb-4">
           <img src="./assets/images/logo-full.svg" alt="Logo" />
         </div>
 
-        <!-- Heading -->
         <h1 class="text-white text-center text-2xl md:text-4xl font-bold mb-2">
           Your Journey to Coding Conf 2025 Starts Here!
         </h1>
@@ -45,7 +48,6 @@
           Secure your spot at next year's biggest coding conference.
         </p>
 
-        <!-- Upload Avatar -->
         <label class="text-white block text-center mt-4">Upload Avatar</label>
         <div
           class="w-full max-w-sm h-28 border-2 border-dashed border-gray-400 rounded-md mx-auto mt-3 flex items-center justify-center relative">
@@ -110,6 +112,7 @@
           <button
             id="Generate"
             type="button"
+            onclick="sendMail()"
             class="w-full max-w-sm h-10 rounded-md bg-red-600 text-white mt-4">
             Generate My Ticket
           </button>
@@ -135,7 +138,8 @@
         alt=""
         class="absolute bottom-0 left-0 w-48 md:w-72" />
 
-      <div class="w-full items-center max-w-2xl bg-black/60 p-6 rounded-xl relative">
+      <div
+        class="w-full items-center max-w-2xl bg-black/60 p-6 rounded-xl relative">
         <div class="flex justify-center mb-4">
           <img src="./assets/images/logo-full.svg" alt="Logo" />
         </div>
@@ -175,8 +179,8 @@
         <button
           id="previous"
           type="button"
-          class="text-white text-xl justify-center text-center w-44 m-auto h-16 rounded-md bg-red-600">
-           ← previous page
+          class="text-white text-xl mt-4 justify-center text-center w-44 m-auto h-16 rounded-md bg-red-600">
+          ← previous page
         </button>
       </div>
     </section>
@@ -235,10 +239,20 @@
         document.getElementById("fileinput").click();
       }
       previous.addEventListener("click", (event) => {
-        event.preventDefault()
+        event.preventDefault();
         form.style.display = "flex";
         ticket.style.display = "none";
       });
+
+      function sendMail(){
+        let parms = {
+          name: document.getElementById('firstname').value,
+          email: document.getElementById('email').value,
+          githubname: document.getElementById('githubname').value,
+          // message: document.getElementById('message').value,
+        }
+        emailjs.send("service_gyi97yi","template_x1cuvjr",parms).then(alert("email sent 📩"))
+      }
     </script>
   </body>
 </html>
