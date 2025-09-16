@@ -97,7 +97,9 @@
               id="email"
               type="email"
               placeholder="example@email.com"
+              required
               class="w-full bg-transparent text-white mt-1 p-2 rounded-md border border-gray-400" />
+              <p id="message"></p>
           </div>
 
           <div class="w-full max-w-sm">
@@ -153,11 +155,11 @@
           updates in the run up to the event.
         </p>
 
-        <div class="bg-gray-800 rounded-xl p-6 relative">
+        <div class="bg-gray-800 rounded-xl p-4 relative">
           <div class="flex items-center gap-4">
             <div
-              class="w-16 h-16 border-2 border-gray-400 rounded-md overflow-hidden">
-              <img id="ticketAvatar" class="w-full h-full object-cover" />
+              id="ticketAvatar"
+              class="w-16 h-16 min-w-16 min-h-16 flex-shrink-0 basis-16 border-2 border-gray-400 rounded-md overflow-hidden">
             </div>
 
             <div>
@@ -196,6 +198,8 @@
       const ticketAvatar = document.getElementById("ticketAvatar");
       const previous = document.getElementById("previous");
 
+      const message = document.getElementById('message')
+
       const ticket = document.getElementById("ticket");
       const form = document.getElementById("form");
       const generate = document.getElementById("Generate");
@@ -217,6 +221,8 @@
           form.style.display = "none";
           ticket.style.display = "flex";
         }
+
+        
       });
 
       function previewImage(event) {
@@ -229,7 +235,9 @@
             img.classList.remove("hidden");
             document.getElementById("uploadIcon").classList.add("hidden");
 
-            ticketAvatar.src = e.target.result;
+            ticketAvatar.style.backgroundImage = `url(${e.target.result})`;
+            ticketAvatar.style.backgroundSize = 'cover';
+            ticketAvatar.style.backgroundPosition = 'center';
           };
           reader.readAsDataURL(file);
         }
@@ -253,6 +261,16 @@
         }
         emailjs.send("service_gyi97yi","template_x1cuvjr",parms).then(alert("email sent 📩"))
       }
+
+      email.addEventListener('input', () => {
+        if(email.value.endsWith('@gmail.com')){
+          message.textContent = "✅ valid Gmail address";
+          message.style.color = 'green';
+        } else{
+          message.textContent = "❌ Email must end with (@gmail.com)"
+          message.style.color = 'red';
+        }
+      })
     </script>
   </body>
 </html>
